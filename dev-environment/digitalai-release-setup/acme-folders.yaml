@@ -1,0 +1,63 @@
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+  - name: release-gitops-examples
+    type: git.Repository
+    url: https://github.com/xebialabs-community/release-gitops-examples
+
+  - directory: Acme DEV
+    children:
+    - name: Deploy Dev Server
+      type: xldeploy.XLDeployServer
+      url: https://deploy-dev.example.com
+      username: admin
+    - folderVariables:
+        - type: xlrelease.ReferenceVariable
+          key: folder.deploy-server
+          label: Local Deploy Server
+          value: Deploy Dev Server
+          referencedType: xldeploy.XLDeployServer
+    - directory: Onboarding
+      children:
+      - type: xlrelease.FolderVersioningSettings
+        gitConnection: release-gitops-examples
+        scmPath: Onboarding
+        branch: main
+
+  - directory: Acme STAGING
+    children:
+      - name: Deploy Staging Server
+        type: xldeploy.XLDeployServer
+        url: https://deploy-staging.example.com
+        username: admin
+      - folderVariables:
+          - type: xlrelease.ReferenceVariable
+            key: folder.deploy-server
+            label: Local Deploy Server
+            value: Deploy Staging Server
+            referencedType: xldeploy.XLDeployServer
+      - directory: Onboarding
+        children:
+          - type: xlrelease.FolderVersioningSettings
+            gitConnection: release-gitops-examples
+            scmPath: Onboarding
+            branch: main
+
+  - directory: Acme PROD
+    children:
+      - name: Deploy Production Server
+        type: xldeploy.XLDeployServer
+        url: https://deploy-prod.example.com
+        username: admin
+      - folderVariables:
+          - type: xlrelease.ReferenceVariable
+            key: folder.deploy-server
+            label: Local Deploy Server
+            value: Deploy Production Server
+            referencedType: xldeploy.XLDeployServer
+      - directory: Onboarding
+        children:
+          - type: xlrelease.FolderVersioningSettings
+            gitConnection: release-gitops-examples
+            scmPath: Onboarding
+            branch: main
