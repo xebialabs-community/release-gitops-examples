@@ -1,0 +1,19 @@
+services:
+
+  digitalai-release:
+    build: digitalai-release
+    ports:
+      - "5516:5516"
+    environment:
+      - ADMIN_PASSWORD=admin
+      - ACCEPT_EULA=Y
+      - SERVER_URL=http://host.docker.internal:5516
+
+  digitalai-release-setup:
+    build: digitalai-release-setup
+    depends_on:
+      - digitalai-release
+    command: ["apply", "-v", "-f", "/data/instance-configuration.yaml"]
+    volumes:
+      - ./digitalai-release-setup:/data:ro
+
