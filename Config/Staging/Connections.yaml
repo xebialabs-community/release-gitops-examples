@@ -1,0 +1,16 @@
+# Exported from:        http://host.docker.internal:5516/
+# Release version:      24.3.5
+# Date created:         Thu Mar 06 20:04:32 GMT 2025
+
+---
+apiVersion: xl-release/v1
+kind: Templates
+metadata:
+  path: /
+  home: Acme STAGING
+spec:
+- name: Deploy - Staging
+  type: xldeploy.XLDeployServer
+  url: https://staging-deploy.example.com
+  username: admin
+  password: !value "xldeploy_XLDeployServer_Deploy___Staging_password"
